@@ -71,9 +71,13 @@ const Index = () => {
     <div className="min-h-screen">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon name="GraduationCap" className="h-8 w-8 text-primary" />
-            <span className="font-heading text-xl font-bold">ДГУНХ</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="https://cdn.poehali.dev/projects/bfdc9be6-829f-4929-8049-3f22ec24665f/files/53fd8d65-0023-4bb0-865b-c08a931a9a1d.jpg" 
+              alt="ДГУНХ Логотип" 
+              className="h-10 w-10 rounded-lg object-cover"
+            />
+            <span className="font-heading text-xl font-bold text-primary">ДГУНХ</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             {['Главная', 'Факультеты', 'Поступление', 'Студентам', 'Наука', 'Новости', 'Контакты'].map((item) => (
@@ -94,7 +98,7 @@ const Index = () => {
         </div>
       </header>
 
-      <section id="главная" className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10">
+      <section id="главная" className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5">
         <div className="container py-24 md:py-32">
           <div className="grid gap-8 lg:grid-cols-2 items-center">
             <div className="space-y-6 animate-fade-in">
@@ -257,7 +261,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="наука" className="py-20 bg-gradient-to-br from-secondary/10 to-primary/10">
+      <section id="наука" className="py-20 bg-gradient-to-br from-secondary/20 to-primary/10">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Научная деятельность</h2>
@@ -353,8 +357,12 @@ const Index = () => {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Icon name="GraduationCap" className="h-6 w-6 text-primary" />
-                <span className="font-heading text-lg font-bold">ДГУНХ</span>
+                <img 
+                  src="https://cdn.poehali.dev/projects/bfdc9be6-829f-4929-8049-3f22ec24665f/files/53fd8d65-0023-4bb0-865b-c08a931a9a1d.jpg" 
+                  alt="ДГУНХ Логотип" 
+                  className="h-8 w-8 rounded-lg object-cover"
+                />
+                <span className="font-heading text-lg font-bold text-primary">ДГУНХ</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Дагестанский государственный университет народного хозяйства
