@@ -2,16 +2,52 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [selectedLecture, setSelectedLecture] = useState<any>(null);
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const subjects = [
+    {
+      id: 1,
+      name: 'Экономическая теория',
+      professor: 'Проф. Иванов А.В.',
+      lectures: [
+        { id: 1, title: 'Введение в экономику', duration: '45 мин', date: '01.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+        { id: 2, title: 'Спрос и предложение', duration: '50 мин', date: '08.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+        { id: 3, title: 'Рыночное равновесие', duration: '48 мин', date: '15.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Финансовый менеджмент',
+      professor: 'Доц. Петрова М.С.',
+      lectures: [
+        { id: 4, title: 'Основы финансового анализа', duration: '52 мин', date: '02.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+        { id: 5, title: 'Управление капиталом', duration: '47 мин', date: '09.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+        { id: 6, title: 'Инвестиционные решения', duration: '55 мин', date: '16.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' }
+      ]
+    },
+    {
+      id: 3,
+      name: 'Маркетинг',
+      professor: 'Проф. Смирнов Д.К.',
+      lectures: [
+        { id: 7, title: 'Основы маркетинга', duration: '43 мин', date: '03.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+        { id: 8, title: 'Сегментация рынка', duration: '49 мин', date: '10.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' },
+        { id: 9, title: 'Digital-маркетинг', duration: '51 мин', date: '17.09.2024', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' }
+      ]
+    }
+  ];
 
   const faculties = [
     {
@@ -225,39 +261,144 @@ const Index = () => {
 
       <section id="студентам" className="py-20 bg-background">
         <div className="container">
-          <div className="grid gap-8 lg:grid-cols-2 items-center">
-            <div className="space-y-6">
-              <h2 className="font-heading text-3xl md:text-4xl font-bold">Студенческая жизнь</h2>
-              <p className="text-lg text-muted-foreground">
-                ДГУНХ — это не только учёба, но и яркая студенческая жизнь, спорт, творчество и новые возможности.
-              </p>
-              <div className="space-y-4">
-                {[
-                  { icon: 'Users', title: 'Студенческие организации', desc: 'Более 20 активных сообществ' },
-                  { icon: 'Trophy', title: 'Спортивные секции', desc: 'Футбол, волейбол, плавание, танцы' },
-                  { icon: 'Music', title: 'Творческие коллективы', desc: 'КВН, театр, вокал, хореография' },
-                  { icon: 'Globe', title: 'Международные программы', desc: 'Обмен студентами с вузами-партнёрами' }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon name={item.icon as any} className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">{item.title}</h4>
-                      <p className="text-sm text-muted-foreground">{item.desc}</p>
-                    </div>
-                  </div>
+          <div className="text-center mb-12">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">Для студентов</h2>
+            <p className="text-lg text-muted-foreground">
+              Ваши лекции и материалы в одном месте
+            </p>
+          </div>
+
+          <Tabs defaultValue="lectures" className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
+              <TabsTrigger value="lectures">
+                <Icon name="BookOpen" className="h-4 w-4 mr-2" />
+                Лекции
+              </TabsTrigger>
+              <TabsTrigger value="life">
+                <Icon name="Users" className="h-4 w-4 mr-2" />
+                Студенческая жизнь
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="lectures" className="space-y-6">
+              <div className="grid gap-6 md:grid-cols-3">
+                {subjects.map((subject) => (
+                  <Card key={subject.id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <Icon name="GraduationCap" className="h-6 w-6 text-primary" />
+                        </div>
+                        <Badge variant="secondary">{subject.lectures.length} лекций</Badge>
+                      </div>
+                      <CardTitle className="text-xl">{subject.name}</CardTitle>
+                      <CardDescription>{subject.professor}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {subject.lectures.map((lecture) => (
+                          <Dialog key={lecture.id}>
+                            <DialogTrigger asChild>
+                              <div 
+                                className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
+                                onClick={() => setSelectedLecture(lecture)}
+                              >
+                                <div className="w-8 h-8 rounded bg-secondary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/30 transition-colors">
+                                  <Icon name="Play" className="h-4 w-4 text-secondary" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors line-clamp-1">
+                                    {lecture.title}
+                                  </h4>
+                                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                    <span className="flex items-center gap-1">
+                                      <Icon name="Clock" className="h-3 w-3" />
+                                      {lecture.duration}
+                                    </span>
+                                    <span>•</span>
+                                    <span>{lecture.date}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl">
+                              <DialogHeader>
+                                <DialogTitle>{lecture.title}</DialogTitle>
+                                <DialogDescription>{subject.name} - {subject.professor}</DialogDescription>
+                              </DialogHeader>
+                              <div className="aspect-video w-full rounded-lg overflow-hidden bg-black">
+                                <iframe
+                                  width="100%"
+                                  height="100%"
+                                  src={lecture.videoUrl}
+                                  title={lecture.title}
+                                  frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                              </div>
+                              <div className="flex items-center justify-between pt-4 border-t">
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                  <span className="flex items-center gap-1">
+                                    <Icon name="Clock" className="h-4 w-4" />
+                                    {lecture.duration}
+                                  </span>
+                                  <span className="flex items-center gap-1">
+                                    <Icon name="Calendar" className="h-4 w-4" />
+                                    {lecture.date}
+                                  </span>
+                                </div>
+                                <Button variant="outline">
+                                  <Icon name="Download" className="h-4 w-4 mr-2" />
+                                  Скачать материалы
+                                </Button>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
-            </div>
-            <div className="relative h-[400px] lg:h-[500px]">
-              <img
-                src="https://cdn.poehali.dev/projects/bfdc9be6-829f-4929-8049-3f22ec24665f/files/8f1742b5-9815-43ef-bc3b-94c2e5926255.jpg"
-                alt="Студенческая жизнь"
-                className="rounded-2xl object-cover w-full h-full shadow-xl"
-              />
-            </div>
-          </div>
+            </TabsContent>
+
+            <TabsContent value="life">
+              <div className="grid gap-8 lg:grid-cols-2 items-center">
+                <div className="space-y-6">
+                  <h3 className="font-heading text-2xl font-bold">Студенческая жизнь</h3>
+                  <p className="text-muted-foreground">
+                    ДГУНХ — это не только учёба, но и яркая студенческая жизнь, спорт, творчество и новые возможности.
+                  </p>
+                  <div className="space-y-4">
+                    {[
+                      { icon: 'Users', title: 'Студенческие организации', desc: 'Более 20 активных сообществ' },
+                      { icon: 'Trophy', title: 'Спортивные секции', desc: 'Футбол, волейбол, плавание, танцы' },
+                      { icon: 'Music', title: 'Творческие коллективы', desc: 'КВН, театр, вокал, хореография' },
+                      { icon: 'Globe', title: 'Международные программы', desc: 'Обмен студентами с вузами-партнёрами' }
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-4 p-4 rounded-lg hover:bg-muted/50 transition-colors">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <Icon name={item.icon as any} className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-1">{item.title}</h4>
+                          <p className="text-sm text-muted-foreground">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="relative h-[400px] lg:h-[500px]">
+                  <img
+                    src="https://cdn.poehali.dev/projects/bfdc9be6-829f-4929-8049-3f22ec24665f/files/8f1742b5-9815-43ef-bc3b-94c2e5926255.jpg"
+                    alt="Студенческая жизнь"
+                    className="rounded-2xl object-cover w-full h-full shadow-xl"
+                  />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
